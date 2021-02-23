@@ -1,23 +1,13 @@
-## Contour following launch file
+## Contour following
 
-Launches the dual arm robots with rviz point selection, contour tracing and following code. 
+Follows a set of points provided by a suitable node (eg. the [contour tracing](../../saif_perception/src/contour_tracing) node). The MoveIt! Cartesian planner is used to move between points and send commands to the robot. Only positions are controlled, orientations are set to remain the same (initial pose) throughout.
 
-To use, execute:
+### Parameters
 
-`roslaunch contour_launch contour.launch`.
+* `contour_offset` - vertical offset above contour point to account for end effector and tool.
+* `repositioning_offset` - vertical offset above contour point to move to before and after contour following. Generally best for this to be about twice the vertical offset.
 
-* Initialise robot to suitable start pose and orientation
-* Select surface to follow using Selected Points Publisher
+### Topics
 
-<img src="ims/s1.png" width="400" /><img src="ims/s2.png" width="400" />
-
-* Nav path will be displayed, and robot will follow this
-
-<img src="ims/s3.png" width="400" /><img src="ims/s4.png" width="400" />
-
-
-<p align="center">
-<img src="ims/surface.gif" width="200" />
-</p>
-
-This node relies on the [contour_tracing](https://github.com/ipab-rad/contour_tracer) node for perception and the [contour_following](../../saif_control/contour_following) node for planning and control.
+* `/corrected_path` - `nav_msgs/Path` offset path to be followed, published for display purposes.
+* `contour_path` - `nav_msgs/Path` path on surface (typically from contour tracing node).
